@@ -35,7 +35,7 @@ def get_base(T,n,m):
         if(T[0,i] != 0 and np.array_equal(T[1:,i], T[1:,i].astype(bool))):
             # print(T[1:,i])
             for j in range(1,n+1):
-                if(T[j,i] == 1):
+                if(np.isclose(T[j,i],1)):
                     T[0,:] = T[0,:]-((T[0,i])*T[j,:])
     return T
 
@@ -126,7 +126,7 @@ def solve_simplex(T,n,m, aux = False):
                     T[i,:] = T[i,:]-(T[i,pivo_col]*T[ind,:])
                 T[0,:] = T[0,:]+(((-1)*T[0,pivo_col])*T[ind,:])
     if(aux):
-        if(T[0,-1] < 0.0000001 and T[0,-1] > -0.0000001):
+        if(np.isclose(T[0,-1],0)):
             T[0,-1] = 0
         if(T[0,-1] < 0):
             return(1, T)
@@ -143,7 +143,7 @@ def print_sol(T,ans,pos = 0):
         for i in range(n,n+m):
             if(np.array_equal(T[1:,i], T[1:,i].astype(bool))):
                 for j in range(1,n+1):
-                    if T[j,i] == 1:
+                    if(np.isclose(T[j,i],1)):
                         print(np.around(T[j,-1], decimals=7),end=" ")
             else:
                 print("0.0",end=" ")
@@ -157,7 +157,7 @@ def print_sol(T,ans,pos = 0):
         for i in range(n,n+m):
             if(np.array_equal(T[1:,i], T[1:,i].astype(bool))):
                 for j in range(1,n+1):
-                    if T[j,i] == 1:
+                    if(np.isclose(T[j,i],1)):
                         print(np.around(T[j,-1], decimals=7),end=" ")
             else:
                 print("0.0",end=" ")
@@ -167,7 +167,7 @@ def print_sol(T,ans,pos = 0):
                 print("1.0",end=" ")
             elif(np.array_equal(T[1:,i], T[1:,i].astype(bool))):
                 for j in range(1,n+1):
-                    if T[j,i] == 1:
+                    if(np.isclose(T[j,i],1)):
                         print(np.around(T[j,pos]*(-1), decimals=7),end=" ")
             else:
                 print("0.0",end=" ")       
@@ -180,7 +180,6 @@ def print_sol(T,ans,pos = 0):
         print("")
     
     exit(0)
-
 
 
 if __name__ == "__main__":
